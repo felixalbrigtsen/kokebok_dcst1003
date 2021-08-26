@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>.nameForm {display: flex; flex-direction: column; margin: auto auto; width: 80%; text-align: center; justify-content: center; align-content: center;}</style>
+</head>
+<body>
+    <div class="nameForm">
+        <label>Fornavn: <input type="text" id="inp_Fname"></label>
+        <label>Mellomnavn: <input type="text" id="inp_Mname"></label>
+        <label>Etternavn: <input type="text" id="inp_Lname"></label>
+        <button id="btn_combine">Kombiner</button>
+        <div id="outputDiv"></div>
+    </div>
+    
+    
+    <script>
+        document.getElementById("btn_combine").onclick = (e)=>{
+            e.preventDefault(); //Avoid the button calling an action if placed in a form/similar
+            var outString = "Fullt navn: ";
+            outString += document.getElementById("inp_Fname").value + " ";
+            outString += document.getElementById("inp_Mname").value + " ";
+            outString += document.getElementById("inp_Lname").value;
+            document.getElementById("outputDiv").innerHTML = outString;
+        }
+    </script>
+</body>
+</html>
