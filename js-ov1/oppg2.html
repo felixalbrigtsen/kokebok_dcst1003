@@ -18,8 +18,7 @@
     
     
     <script>
-        document.getElementById("btn_combine").onclick = (e)=>{
-            e.preventDefault(); //Avoid the button calling an action if placed in a form/similar
+        document.getElementById("btn_combine").onclick = ()=>{
             var outString = "Fullt navn: ";
             outString += document.getElementById("inp_Fname").value + " ";
             outString += document.getElementById("inp_Mname").value + " ";
