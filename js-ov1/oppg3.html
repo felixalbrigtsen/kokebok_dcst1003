@@ -10,10 +10,13 @@
     <input type="text" id="inp_text" placeholder="Skriv her...">
     <div id="outputDiv"></div>
     <script>
+        //Bind DOM elements to variables
+        var textBox = document.getElementById("inp_text");
+        var outDiv = document.getElementById("outputDiv");
+
         //Oninput is called every time text is typed or removed from the input element. 
-        //Onchange is only called when the element loses focus.
-        document.getElementById("inp_text").oninput = ()=>{
-            document.getElementById("outputDiv").innerHTML = document.getElementById("inp_text").value;
+        textBox.oninput = function(){
+            outDiv.innerHTML = textBox.value;
         }
     </script>
 </body>
