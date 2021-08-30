@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppg3</title>
+    <style>
+        #mainForm { text-align: center; margin: auto auto; width: 80%;}
+    </style>
+</head>
+<body>
+    <div id="mainForm">
+        <input type="text" placeholder="H/B/U" id="inp_team">
+        <button id="btn1">Sjekk alder</button>
+        <p id="p_res"></p>
+    </div>
+    <script>
+        var outElement = document.getElementById("p_res");
+        var btnElement = document.getElementById("btn1");
+        var inpElement = document.getElementById("inp_team");
+
+        btnElement.onclick = function() {
+            var res;
+            var team = inpElement.value;
+            if (team == "H") {
+                res = "Hjemme";
+            } else if (team == "B") {
+                res = "Borte";
+            } else if (team == "U") {
+                res = "Uavgjort";
+            } else {
+                res = "Inndata ikke gjenkjent.<br>Vennligst skriv inn [H]jemme, [B]orte eller [U]avgjort.";
+            }
+
+            outElement.innerHTML = res; //Vis frem resultat i p-tagen
+        }
+    </script>
+</body>
+</html>

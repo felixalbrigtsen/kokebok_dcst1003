@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppg1</title>
+    <style>
+        #p_res { display: grid; grid-template-columns: 1fr 1fr;}
+        #mainForm { text-align: center; margin: auto auto; width: 60%;}
+    </style>
+</head>
+<body>
+    <div id="mainForm">
+        <input type="number" placeholder="Skriv inn et tall" id="inp_num1">
+        <button id="btn1">Regn ut</button>
+        <p id="p_res"></p>
+    </div>
+    <script>
+        var outElement = document.getElementById("p_res");
+        var btnElement = document.getElementById("btn1");
+        var inpElement = document.getElementById("inp_num1");
+        
+        btnElement.onclick= function(){
+            var num1 = inpElement.value; //Hent verdien fra tekstboksen
+
+            if (isNaN(num1)) { //Sjekk at verdien er et tall, ellers si ifra og avbryt
+                outElement.innerHTML = "Feil; vennligst oppgi et tall";
+                return 
+            }
+
+            //Fyll ut Template string med verdier og sett det inn i <p> for å vise på skjermen
+            outElement.innerHTML = ` 
+            <b>Halvparten:</b>  ${num1/2}
+            <b>Dobbelt:</b>     ${num1*2}
+            <b>Tredobbelt:</b>  ${num1*3}
+            <b>I andre:</b>     ${num1*num1}
+            `
+        }
+    </script>
+</body>
+</html>
