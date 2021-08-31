@@ -13,23 +13,23 @@
     <div id="mainForm">
         <label>Alder: <input type="number" placeholder="Skriv inn din alder" id="inp_num1"></label>
         <label>Avstand: <input type="number" placeholder="Skriv inn anntal km" id="inp_num2">km</label>
-        <button id="btn1">Sjekk alder</button>
+        <button id="btn1">Finn pris</button>
         <p id="p_res"></p>
     </div>
     <script>
-        var outElement = document.getElementById("p_res");
-        var btnElement = document.getElementById("btn1");
-        var inpAgeElement = document.getElementById("inp_num1");
-        var inpDistElement = document.getElementById("inp_num2");
+        let outElement = document.getElementById("p_res");
+        let btnElement = document.getElementById("btn1");
+        let inpAgeElement = document.getElementById("inp_num1");
+        let inpDistElement = document.getElementById("inp_num2");
 
-        //Definer konstanter så de lett kan endres
+        //Definer konstanter så de lett kan endres. "Rabatt" er nå regnet om til en omregningsfaktor (1 - prosentRabatt/100)
         const KMPRICE = 3.52;
         const CHILDPRICE = 0.50;
         const PENSIONERPRICE = 0.80;
 
         btnElement.onclick= function(){
-            var age = inpAgeElement.value; //Hent verdiene fra tekstboksene
-            var km = inpDistElement.value;
+            let age = inpAgeElement.value; //Hent verdiene fra tekstboksene
+            let km = inpDistElement.value;
 
             if (isNaN(age)) { //Sjekk at verdien er et tall, ellers si ifra og avbryt
                 outElement.innerHTML = "Feil; vennligst oppgi alder som et tall";
@@ -40,7 +40,7 @@
                 return 
             }
 
-            var price = KMPRICE * km;
+            let price = KMPRICE * km;
 
             if (age < 12) {
                 price *= CHILDPRICE;
@@ -48,8 +48,9 @@
                 price *= PENSIONERPRICE;
             }
 
-            //Kutt ned til to desimaler(øre), i tilfelle inputs med mange desimaler eller floating-point rounding-error
-            outElement.innerHTML = "Biletten koster " + price.toFixed(2) + "kr.";
+            //Kutt ned til to desimaler(øre) med toFixed, i tilfelle inputs med mange desimaler eller floating-point rounding-error
+            //For å gjøre dette skikkelig burde man bruke en Intl.NumberFormat, som formater iht norsk lokaliseringsstandard
+            outElement.innerHTML = "Biletten koster " + price.toFixed(2) + " kr.";
 
             
         }

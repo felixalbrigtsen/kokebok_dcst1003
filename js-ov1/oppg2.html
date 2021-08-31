@@ -15,37 +15,40 @@
         <button id="btn_combine">Kombiner</button>
         <div id="outputDiv"></div>
     </div>
-    
-    
-    <!--  FORSLAG 1, enkelt, noe rotete
-    <script>
-        document.getElementById("btn_combine").onclick = ()=>{
-            var outString = "Fullt navn: ";
-            outString += document.getElementById("inp_Fname").value + " ";
-            outString += document.getElementById("inp_Mname").value + " ";
-            outString += document.getElementById("inp_Lname").value;
-            document.getElementById("outputDiv").innerHTML = outString;
-        }
-    </script> -->
 
     <script>
-        //FORSLAG 2, ryddig og enkelt
+        //Min beste løsning, ryddig og enkelt
         document.getElementById("btn_combine").onclick = function() {
-            var fname = document.getElementById("inp_Fname").value;
-            var mname = document.getElementById("inp_Mname").value;
-            var lname = document.getElementById("inp_Lname").value;
-            var outDiv = document.getElementById("outputDiv");
-            var res = `Fullt navn: ${fname} ${mname} ${lname}`;
-            // var res = "Fullt navn: " + fname + " " + mname + " " + lname; //Alternative without template literals
+            let fname = document.getElementById("inp_Fname").value;
+            let mname = document.getElementById("inp_Mname").value;
+            let lname = document.getElementById("inp_Lname").value;
+            let outDiv = document.getElementById("outputDiv");
+            let res = `Fullt navn: ${fname} ${mname} ${lname}`;
+            // let res = "Fullt navn: " + fname + " " + mname + " " + lname; //Alternativ uten templates
             outDiv.innerHTML = res;
         }
         
     </script>
-    <!-- <script>
-        //FORSLAG 3, kompakt men uleselig
-        document.getElementById("btn_combine").onclick = function() {
-            document.getElementById("outputDiv").innerHTML=`Fullt navn: ${document.getElementById("inp_Fname").value} ${document.getElementById("inp_Mname").value} ${document.getElementById("inp_Lname").value}`
-        }
-    </script> -->
+    <!--  
+
+        <script>
+            //Alternativ 1, enkelt, noe rotete
+            document.getElementById("btn_combine").onclick = ()=>{
+                let outString = "Fullt navn: ";
+                outString += document.getElementById("inp_Fname").value + " ";
+                outString += document.getElementById("inp_Mname").value + " ";
+                outString += document.getElementById("inp_Lname").value;
+                document.getElementById("outputDiv").innerHTML = outString;
+            }
+        </script>
+
+
+        <script>
+            //Alternativ 3, kompakt men uleselig
+            document.getElementById("btn_combine").onclick = function() {
+                document.getElementById("outputDiv").innerHTML=`Fullt navn: ${document.getElementById("inp_Fname").value} ${document.getElementById("inp_Mname").value} ${document.getElementById("inp_Lname").value}`
+            }
+        </script> 
+    -->
 </body>
 </html>

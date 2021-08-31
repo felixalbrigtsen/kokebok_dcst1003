@@ -11,17 +11,17 @@
 <body>
     <div id="mainForm">
         <input type="text" placeholder="H/B/U" id="inp_team">
-        <button id="btn1">Sjekk alder</button>
+        <button id="btn1">Velg ditt lag</button>
         <p id="p_res"></p>
     </div>
     <script>
-        var outElement = document.getElementById("p_res");
-        var btnElement = document.getElementById("btn1");
-        var inpElement = document.getElementById("inp_team");
+        let outElement = document.getElementById("p_res");
+        let btnElement = document.getElementById("btn1");
+        let inpElement = document.getElementById("inp_team");
 
         btnElement.onclick = function() {
-            var res;
-            var team = inpElement.value;
+            let res;
+            let team = inpElement.value;
             if (team == "H") {
                 res = "Hjemme";
             } else if (team == "B") {

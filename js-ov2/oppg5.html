@@ -15,31 +15,28 @@
         <p id="p_res"></p>
     </div>
     <script>
-        //Se mer effektiv løsning i oppg5_alt.html
-        var outElement = document.getElementById("p_res");
-        var btnElement = document.getElementById("btn1");
-        var inpElement = document.getElementById("inp_team");
+        let outElement = document.getElementById("p_res");
+        let btnElement = document.getElementById("btn1");
+        let inpElement = document.getElementById("inp_team");
 
         btnElement.onclick = function() {
-            var res;
-            var team = inpElement.value;
+            let res; //Variabel vi fyller ut med RESultatet
 
-            //Hver case stopper ikke før en "break" nåes, så begge caser vil matche samme uttrykk/res.
+            //Gjør om input til store bokstaver
+            let team = inpElement.value.toUpperCase(); 
+
             switch(team) {
                 case "H":
-                case "h":
                     res = "Hjemme";
                     break;
                 case "B":
-                case "b":
                     res = "Borte";
                     break;
                 case "U":
-                case "u":
                     res = "Uavgjort";
                     break;
                 default:
-                    res = "Inndata ikke gjenkjent.<br>Vennligst skriv inn [H]jemme, [B]orte eller [U]avgjort.";
+                    res = "Inndata ikke gjenkjent.<br>Vennligst skriv inn [H/h]jemme, [B/b]orte eller [U/u]avgjort.";
             }
 
             outElement.innerHTML = res; //Vis frem resultat i p-tagen
