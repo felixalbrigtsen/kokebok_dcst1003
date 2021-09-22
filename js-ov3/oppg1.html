@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oppg1</title>
+</head>
+<body>
+    <h2>Oppgave 1</h2>
+    <div id="oppg1_out"></div><br>
+    <h2>Oppgave 2</h2>
+    <div id="oppg2_out"></div><br>
+    <h2>Oppgave 3</h2>
+    <div id="oppg3_in">
+        <label>Startverdi:<input id="o3_min"></label>
+        <label>Maksverdi: <input id="o3_max"></label>
+        <button id="oppg3_trigger">Start</button>
+    </div>
+    <div id="oppg3_out"></div><br>
+    <h2>Oppgave 4</h2>
+    <div id="oppg4_out"></div><br>
+    <h2>Oppgave 5</h2>
+    <div id="oppg5_out"></div><br>
+    <h2>Oppgave 6</h2>
+    <form id="oppg6_in">
+        <input type="text" id="o6_username" placeholder="Brukernavn">
+        <input type="password" id="o6_password" placeholder="Passord">
+        <input type="submit" id="oppg6_trigger" value="Logg inn">
+    </form>
+    <div id="oppg6_out"></div>
+
+    <h1>XTRA</h1>
+
+    <h2>Oppgave 7</h2>
+    <div id="oppg7_out"></div><br>
+    <h2>Oppgave 8</h2>
+    <div id="oppg8_out"></div><br>
+    <h2>Oppgave 9</h2>
+    <div id="oppg9_in">
+        Vis:
+        <select id="o9_select">
+            <option value="0">Partall</option>
+            <option value="1">Oddetall</option>
+        </select>
+    </div>
+    <div id="oppg9_out"></div><br>
+    <h2>Oppgave 10</h2>
+    <div id="oppg10_in">
+        <label>Primtallsjekk for: <input type="number" id="o10_num"></label>
+    </div>
+    <div id="oppg10_out"></div><br>
+
+    
+
+    <script>
+        // Oppgave 1 - For-løkker og while-løkker kan gjøre det samme
+        // Lag et program tilsvarende første eksempel i timen (som står forklart i form av en for-løkke),
+        // bare at du nå skal bruke en while-løkke. Det som skal skrives ut på websiden er
+        // altså: "Jeg er tall nummer X" der X varierer fra 1 til 7.
+        let out1 = "";
+        let i1 = 0;
+        while (i1 < 7) {
+            i1++;
+            out1 += "<br>Jeg er tall nummer " + i1; 
+        }
+        document.getElementById("oppg1_out").innerHTML = out1;
+
+        // Oppgave 2 - Lag deretter et tilsvarende program som over, men la X variere mellom 12 og 98, og gjør det
+        // slik at bare hvert 5. tall skrives ut. Bruk fortsatt while. Det første tallet som skal skrives ut er
+        // altså 12, men hva blir da det siste tallet som skrives ut? Hvorfor?
+        let out2 = "";
+        let i2 = 12;
+        while (i2 < 98) {
+            out2 += "<br>Jeg er tall nummer " + i2;
+            i2 += 5;
+        }
+        out2 += "<br><br>Det siste tallet blir altså, " + (i2-5) + ", da det er det største tallet 12+5n, der n er et heltall, under 98."
+        document.getElementById("oppg2_out").innerHTML = out2;
+
+
+        // Oppgave 3 - Lag et program som skriver ut alle tall mellom de start- og sluttall som brukeren skriver inn.
+        // Du skal skrive ut alle sammen i en lang tekststreng.
+        document.getElementById("oppg3_trigger").onclick = ()=>{
+            //Hent ut tallverdier fra input-bokser
+            let o3_min = parseInt(document.getElementById("o3_min").value);
+            let o3_max = parseInt(document.getElementById("o3_max").value);
+
+            let out3 = "";
+            let i3 = o3_min;
+            while (i3 <= o3_max) {
+                out3 += ", " + i3; //Lag "fin" liste
+                i3 += 1;
+            }
+            document.getElementById("oppg3_out").innerHTML = out3.substr(2); //Fjern innledende komma og mellomrom
+        }
+
+        //Oppgave 4 - Den store multiplikasjonstabell
+        // Lag en prosedyre som skriver ut den store multiplikasjonstabellen (fra 10 til 19). Skriv til
+        // websiden.
+
+        //Kan skrives enklere "kun med strings", men her bruker jeg til en viss grad DOM-metoder for å lage elementer.
+        let out4 = document.createElement("table");
+        let o4head = document.createElement("tr");
+        out4.appendChild(o4head);
+        o4head.innerHTML += "<td><b>X</b></td>";
+
+
+        for (let i4 = 10; i4 <= 19; i4++) {
+            //Skriv head(Første rad)
+            o4head.innerHTML += "<td><b>"+i4+"</b></td>";
+
+            //Lag nytt rad-element
+            let row = document.createElement("tr");
+
+            //Lag første kolonne
+            let stub = document.createElement("td");
+            row.appendChild(stub);
+            stub.innerHTML = "<b>"+i4+"</b>";   
+
+            //For hver kolonne i hver rad
+            for (let i4b = 10; i4b <= 19; i4b++) {            
+                let cell = document.createElement("td");
+                cell.innerHTML = i4*i4b;
+                row.appendChild(cell);
+            }
+
+            out4.appendChild(row);
+        }
+        
+        document.getElementById("oppg4_out").appendChild(out4);
+        
+
+        // Oppgave 5 - Sanger kan skrives med løkker!
+        // Lag et program som skriver ut denne sangen (på samme form som vist her). Programmet
+        // skal bruke løkker for å få dette til – hvis ikke må jo du som programmerer skrive inn 40 linjer
+        // og det vil du vel ikke…
+
+        for (let i5 = 10; i5 > 0; i5--) {
+            //Bruk template literal for å sette tallverdier.
+            let out =  
+            `${i5} green bottles, hanging on a wall,<br>
+            ${i5} green bottles, hanging on a wall,<br>
+            If 1 green bottle were to accidentally fall<br>
+            There'd be ${i5-1} green bottles, hanging on the wall<br><br>`;
+
+            //Fjern flertalls-S i det siste tilfellet. Ekstra-Ekstra: skriv no i stedet for null
+            if (i5 == 1) { 
+                out = out.replaceAll("bottles", "bottle");
+                out = out.replace("0 green bottle", "no green bottles");
+            }
+
+            document.getElementById("oppg5_out").innerHTML += out;
+        }
+
+
+        //Oppgave 6 -  - Kun tre forsøk på riktig passord
+        // I timen viste vi et enkelt passordsystem. Du skal nå lage et system som tester om passord er
+        // riktig, men som bare gir brukeren tre forsøk. Ta også hensyn til tre mulige
+        // brukernavn med forskjellig passord
+
+        //NB! Bruker faktisk ikke løkke i dette tilfellet
+        let o6_loggedIn = false;
+        let o6_attempts = 0;
+        let o6_out = document.getElementById("oppg6_out");
+        const o6_maxattempts = 3;
+
+        const users = {
+            "ole": "hemmelig",
+            "abc": "def",
+            "navn": "passord"
+        };
+
+        document.getElementById("oppg6_trigger").onclick = (e)=>{
+            e.preventDefault(); //Ikke last inn siden på nytt
+
+            if (!o6_loggedIn && (o6_attempts < o6_maxattempts)) {
+                let uname = document.getElementById("o6_username").value;
+                let pword = document.getElementById("o6_password").value;
+                if (Object.keys(users).includes(uname) && users[uname] == pword) {
+                    o6_loggedIn = true;
+                    o6_out.innerHTML = "Du er logget inn.";
+                } else {
+                    o6_attempts++;
+                    o6_out.innerHTML = "Feil brukernavn og/eller passord, du har nå " + (o6_maxattempts-o6_attempts) + " forsøk.";
+                }
+            } 
+            if (o6_attempts >= o6_maxattempts) {
+                o6_out.innerHTML = "Du har brukt for mange forsøk."
+            }
+        }
+
+
+        //XTRA
+
+        //Oppgave 7 - Vanskelig trekant
+        let o7_out = "";
+        for (let i7a = 1; i7a <= 10; i7a++) {
+            for (let i7b = 1; i7b <= i7a; i7b++) {
+                o7_out += i7b + " ";
+            }
+            o7_out += "<br>";
+        }
+        document.getElementById("oppg7_out").innerHTML = o7_out;
+
+        //Oppgave 8 - Enda en vanskelig trekant
+        let o8_out = "";
+        for (let i8a = 10; i8a >0; i8a--) {
+            for (let i8b = 1; i8b <= i8a; i8b++) {
+                o8_out += i8b + " ";
+            }
+            o8_out += "<br>";
+        }
+        document.getElementById("oppg8_out").innerHTML = o8_out;
+
+        //Oppgave 9 - Partall og oddetall, nokså vanskelig
+        // Du skal lage et program som gir brukeren mulighet til å velge at bare oddetall eller partall
+        // mellom 1 og 10 skal skrives ut. 
+        let o9_select = document.getElementById("o9_select");
+        let o9_out = document.getElementById("oppg9_out");
+        o9_select.onchange = ()=>{
+            let nums = [];
+            for (let i9 = 0; i9 <= 10; i9++) {
+                if (i9 % 2 == parseInt(o9_select.value)) {
+                    nums.push(i9);
+                }
+            }
+
+            o9_out.innerHTML = nums.join(", ");
+        }
+
+        // Oppgave 10 - Primtall, ganske vanskelig
+        // Lag et program som finner ut om et tall er et primtall, altså kun delelig med seg selv og 1. 
+        let o10_num = document.getElementById("o10_num")
+        o10_num.oninput = ()=>{
+            document.getElementById("oppg10_out").innerHTML = o10_num.value + " er " + (checkPrime(o10_num.value)?"":"ikke ") + "et primtall";
+        }
+
+        function checkPrime(nstring) {
+            let n = parseInt(nstring);
+
+            //0, 1 og negative tall er ikke primtall.
+            if (n < 2) { return false; }
+
+            //Gå gjennom alle tall til og med ceil(2nd-rot av n)
+            for (let i10 = 2; i10 <= Math.ceil(Math.sqrt(n)); i10++) {
+                if (n % i10 == 0) {
+                    return false;
+                }
+            }
+
+            return true
+        }
+
+    </script>
+</body>
+</html>
