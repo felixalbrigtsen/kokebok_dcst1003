@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oppg1</title>
+    <title>Øving 3</title>
 </head>
 <body>
     <h2>Oppgave 1</h2>
     <div id="oppg1_out"></div><br>
+
     <h2>Oppgave 2</h2>
     <div id="oppg2_out"></div><br>
+
     <h2>Oppgave 3</h2>
     <div id="oppg3_in">
         <label>Startverdi:<input id="o3_min"></label>
@@ -18,10 +20,13 @@
         <button id="oppg3_trigger">Start</button>
     </div>
     <div id="oppg3_out"></div><br>
+
     <h2>Oppgave 4</h2>
     <div id="oppg4_out"></div><br>
+
     <h2>Oppgave 5</h2>
     <div id="oppg5_out"></div><br>
+    
     <h2>Oppgave 6</h2>
     <form id="oppg6_in">
         <input type="text" id="o6_username" placeholder="Brukernavn">
@@ -34,8 +39,10 @@
 
     <h2>Oppgave 7</h2>
     <div id="oppg7_out"></div><br>
+
     <h2>Oppgave 8</h2>
     <div id="oppg8_out"></div><br>
+
     <h2>Oppgave 9</h2>
     <div id="oppg9_in">
         Vis:
@@ -45,6 +52,7 @@
         </select>
     </div>
     <div id="oppg9_out"></div><br>
+
     <h2>Oppgave 10</h2>
     <div id="oppg10_in">
         <label>Primtallsjekk for: <input type="number" id="o10_num"></label>
@@ -89,17 +97,17 @@
             let out3 = "";
             let i3 = o3_min;
             while (i3 <= o3_max) {
-                out3 += ", " + i3; //Lag "fin" liste
+                out3 += ", " + i3; //Lag "fin" liste. Kunne også brukt array.push som i oppgave 9, men ikke viktig for korte lister.
                 i3 += 1;
             }
             document.getElementById("oppg3_out").innerHTML = out3.substr(2); //Fjern innledende komma og mellomrom
         }
 
-        //Oppgave 4 - Den store multiplikasjonstabell
+        // Oppgave 4 - Den store multiplikasjonstabell
         // Lag en prosedyre som skriver ut den store multiplikasjonstabellen (fra 10 til 19). Skriv til
         // websiden.
 
-        //Kan skrives enklere "kun med strings", men her bruker jeg til en viss grad DOM-metoder for å lage elementer.
+        // Kan skrives enklere "kun med strings", men her bruker jeg til en viss grad DOM-metoder for å lage elementer.
         let out4 = document.createElement("table");
         let o4head = document.createElement("tr");
         out4.appendChild(o4head);
@@ -144,7 +152,7 @@
             If 1 green bottle were to accidentally fall<br>
             There'd be ${i5-1} green bottles, hanging on the wall<br><br>`;
 
-            //Fjern flertalls-S i det siste tilfellet. Ekstra-Ekstra: skriv no i stedet for null
+            //Fjern flertalls-S i det siste tilfellet. Ekstra-Ekstra: skriv "no" i stedet for 0
             if (i5 == 1) { 
                 out = out.replaceAll("bottles", "bottle");
                 out = out.replace("0 green bottle", "no green bottles");
@@ -159,34 +167,49 @@
         // riktig, men som bare gir brukeren tre forsøk. Ta også hensyn til tre mulige
         // brukernavn med forskjellig passord
 
-        //NB! Bruker faktisk ikke løkke i dette tilfellet
-        let o6_loggedIn = false;
-        let o6_attempts = 0;
+
+        //Merk! Den implementerte løsningen under er lite effektiv i praksis, da javascript har innebygde funksjoner som er betydelig raskere enn å bruke en løkke.
+        //Ved å definere et objekt med brukernavn som index, vil vi få renere og raskere kode, men jeg har ikke gjort dette, da oppgaven spesifikt omhandler løkker.
+        //Forenklet eksempel:
+        // const users = {
+        //     "ole": "hemmelig",
+        //     "abc": "def",
+        //     "navn": "passord"
+        // };
+        // Sjekke om bruker finnes:                 if (users[input_un] != undefined) {}
+        // Deretter, sjekke om passord er riktig:   if (input_pw == users[input_un]) {}
+        // Her tester vi altså om indeksen finnes i brukerobjektet, og sparer tid og prossessorkraft på å ikke iterere gjennom listen.
+
+
         let o6_out = document.getElementById("oppg6_out");
-        const o6_maxattempts = 3;
-
-        const users = {
-            "ole": "hemmelig",
-            "abc": "def",
-            "navn": "passord"
-        };
-
+        const users = [
+            {"name": "abc", "password": "def", "remainingAttempts": 3},
+            {"name": "ole", "password": "hemmelig", "remainingAttempts": 3},
+            {"name": "navn", "password": "pass", "remainingAttempts": 3}
+        ];
         document.getElementById("oppg6_trigger").onclick = (e)=>{
-            e.preventDefault(); //Ikke last inn siden på nytt
+            e.preventDefault(); //Ikke last inn siden på nytt(default er å sende inn form, ikke gjør det)
 
-            if (!o6_loggedIn && (o6_attempts < o6_maxattempts)) {
-                let uname = document.getElementById("o6_username").value;
-                let pword = document.getElementById("o6_password").value;
-                if (Object.keys(users).includes(uname) && users[uname] == pword) {
-                    o6_loggedIn = true;
-                    o6_out.innerHTML = "Du er logget inn.";
-                } else {
-                    o6_attempts++;
-                    o6_out.innerHTML = "Feil brukernavn og/eller passord, du har nå " + (o6_maxattempts-o6_attempts) + " forsøk.";
+            let input_un = document.getElementById("o6_username").value;
+            let input_pw = document.getElementById("o6_password").value;
+            let userFound = false;
+            for (let i = 0; i < 3; i++) {
+                if (input_un == users[i].name) {
+                    userFound = true;
+                    if (users[i].remainingAttempts == 0) {
+                        o6_out.innerHTML = "Du har brukt for mange forsøk, og kan ikke logge inn.";
+                        return //Stopp funksjonen her, ikke gå videre
+                    }
+                    if (input_pw == users[i].password) {
+                        o6_out.innerHTML = `Du er logget inn som ${users[i].name}`;
+                    } else {
+                        users[i].remainingAttempts--;
+                        o6_out.innerHTML = `Feil passord, du har nå ${users[i].remainingAttempts} forsøk igjen.`; 
+                    }
                 }
-            } 
-            if (o6_attempts >= o6_maxattempts) {
-                o6_out.innerHTML = "Du har brukt for mange forsøk."
+            }
+            if (!userFound) {
+                o6_out.innerHTML = "Brukeren finnes ikke, vennligst prøv igjen.";
             }
         }
 
@@ -242,14 +265,14 @@
             //0, 1 og negative tall er ikke primtall.
             if (n < 2) { return false; }
 
-            //Gå gjennom alle tall til og med ceil(2nd-rot av n)
+            //Gå gjennom alle tall til og med 2nd-rot av n, rundet opp
             for (let i10 = 2; i10 <= Math.ceil(Math.sqrt(n)); i10++) {
-                if (n % i10 == 0) {
+                if (n % i10 == 0) { //Sjekk om n er delelig på iteratoren
                     return false;
                 }
             }
 
-            return true
+            return true //Om funksjonen ikke har returnert false enda, så må den automatisk være true
         }
 
     </script>
