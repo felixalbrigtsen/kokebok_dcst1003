@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Øving 4</title>
+</head>
+<body>
+    <h2>Oppgave 1</h2>
+    <div id="oppg1_in">
+        <label>Alder: <input type="number" id="o1_age" placeholder="Alder i år"></label>
+    </div>
+    <div id="oppg1_out"></div><br>
+
+    <h2>Oppgave 2</h2>
+    <div id="oppg2_out"></div><br>
+    <script>
+        let o1AgeInput = document.getElementById("o1_age")
+        o1AgeInput.oninput = ()=>{
+            let o1Out = "";
+            let o1Age = parseInt(o1AgeInput.value); 
+            if (o1Age >= 12 && o1AgeInput <= 19) {
+                o1Out = "Du er tenåring";
+            } else {
+                o1Out = "Du er ikke tenåring";
+            }
+            document.getElementById("oppg1_out").innerHTML = o1Out;
+        }
+    </script>
+</body>
+</html>
