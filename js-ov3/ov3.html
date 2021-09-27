@@ -170,13 +170,14 @@
 
         //Merk! Den implementerte løsningen under er lite effektiv i praksis, da javascript har innebygde funksjoner som er betydelig raskere enn å bruke en løkke.
         //Ved å definere et objekt med brukernavn som index, vil vi få renere og raskere kode, men jeg har ikke gjort dette, da oppgaven spesifikt omhandler løkker.
+        //Dette ville uansett ikke blitt noe problem før vi har flere hundre brukerkontoer, og har ingen ting å si med et så lite antall.
         //Forenklet eksempel:
         // const users = {
         //     "ole": "hemmelig",
         //     "abc": "def",
         //     "navn": "passord"
         // };
-        // Sjekke om bruker finnes:                 if (users[input_un] != undefined) {}
+        // Sjekke om bruker finnes:                 if (users[input_un]) {}
         // Deretter, sjekke om passord er riktig:   if (input_pw == users[input_un]) {}
         // Her tester vi altså om indeksen finnes i brukerobjektet, og sparer tid og prossessorkraft på å ikke iterere gjennom listen.
 
