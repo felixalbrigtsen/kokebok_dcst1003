@@ -11,22 +11,160 @@
     <div id="oppg1_in">
         <label>Alder: <input type="number" id="o1_age" placeholder="Alder i år"></label>
     </div>
-    <div id="oppg1_out"></div><br>
+    <div id="oppg1_out">Du er ikke tenåring</div><br>
 
     <h2>Oppgave 2</h2>
-    <div id="oppg2_out"></div><br>
+    <div id="oppg2_in">
+        <label>Tall 1: <input type="number" id="o2_in1"></label>
+        <label>Tall 2: <input type="number" id="o2_in2"></label>
+    </div>
+    <div id="oppg2_out">0</div><br>
+
+    <h2>Oppgave 3</h2>
+    <div id="oppg3_in">
+        <label>Sidelengde: <input type="number" id="o3_in"></label>
+    </div>
+    <div id="oppg3_out">Vennligst skriv inn et tall.</div><br>
+
+    <h2>Oppgave 4 og 5</h2>
+    <div id="oppg3_in">
+        <label>Tall til faktorisering: <input type="number" id="o4_in1"></label>
+        <button id="oppg4_trigger">Faktoriser</button>
+        <button id="oppg5_trigger">Største faktor i popup</button>
+    </div>
+    <div id="oppg4_out"></div><br>
+
+    <h2>XTRA:</h2>
+    
+    <h2>Oppgave 6</h2>
+    <div id="oppg6_in">
+        <label>Mål-alder: <input type="text" id="o6_in1">
+    </div>
+    <div id="oppg6_out"></div>
+
+    <h2>Oppgave 7</h2>
+    <div id="oppg7_in"></div>
+    <div id="oppg7_out"></div>
+
+    <h2>Oppgave 8</h2>
+    <div id="oppg8_in"></div>
+    <div id="oppg8_out"></div>
+
+
+
+
+
     <script>
+        // Oppgave 1 - Tenåring i huset?
+        // Lag en funksjon som returnerer teksten "Du er tenåring" hvis alder er mellom 13 og 19 år, og
+        // ellers returnerer teksten "Du er ikke tenåring". Her må du bruke if-setning i funksjonen.
         let o1AgeInput = document.getElementById("o1_age")
         o1AgeInput.oninput = ()=>{
             let o1Out = "";
-            let o1Age = parseInt(o1AgeInput.value); 
-            if (o1Age >= 12 && o1AgeInput <= 19) {
+            let age = parseInt(o1AgeInput.value); 
+            if (age && (age >= 12 && age<= 19)) {
                 o1Out = "Du er tenåring";
             } else {
                 o1Out = "Du er ikke tenåring";
             }
             document.getElementById("oppg1_out").innerHTML = o1Out;
         }
+
+
+        // Oppgave 2 - Største tall
+        // Lag en funksjon som finner det største av to tall.
+        let o2_in1 = document.getElementById("o2_in1");
+        let o2_in2 = document.getElementById("o2_in2");
+        function o2_biggest() {
+            //Les input som tall
+            let n1 = parseInt(o2_in1.value);
+            let n2 = parseInt(o2_in2.value);
+            //Hvis det ikke finnes tallverdier i feltet, sett 0
+            if (!n1) { n1 = 0; }
+            if (!n2) { n2 = 0; }
+
+            document.getElementById("oppg2_out").innerHTML=Math.max(n1, n2);
+        }
+        o2_in1.oninput = o2_biggest;
+        o2_in2.oninput = o2_biggest;
+
+        // Oppgave 3 - Areal på kvadrat
+        // Lag en funksjon som returnerer arealet til et kvadrat. Det er nok at kun en side er kjent for at
+        // arealet skal kunne regnes ut, fordi i et kvadrat er som kjent alle sider like. Formelen for
+        // arealet av et kvadrat blir derfor: Areal = side ganger side.
+        let o3_in = document.getElementById("o3_in")
+        let o3_out = document.getElementById("oppg3_out");
+        o3_in.oninput = ()=>{
+            let s = parseInt(o3_in.value);
+            if (s) {
+                o3_out.innerHTML = `Kvadratet med sidelengde ${s} har arealet ${s**2}`;
+            } else {
+                o3_out.innerHTML = "Vennligst skriv inn et tall."
+            }
+            
+        }
+
+        // Oppgave 4 - Kall opp to funksjoner
+        // Lag et program som kaller to egendefinerte funksjoner (dvs. som du selv har skrevet). Den
+        // ene prosedyren skal fylle en array med innhold (hva du vil, tekst eller tall) og den andre
+        // prosedyren skal skrive ut innholdet i arrayen til websiden.
+    
+        function factorize(n) {
+            //Primtallsfaktorisering, returnerer en array
+            let factors = [];
+            let m = n;
+            for (let i = 2; i <= n; i++) {
+                while (m % i == 0) {
+                    factors.push(i);
+                    m /= i;
+                }
+            }
+            return factors;
+        }
+        function displayOppg4(data) {
+            document.getElementById("oppg4_out").innerHTML = data;
+        }
+        document.getElementById("oppg4_trigger").onclick = ()=>{
+            let inputNum = parseInt(document.getElementById("o4_in1").value);
+            if (inputNum) {
+                //Kall de to funksjonene beskrevet over
+                let arr = factorize(inputNum);
+                displayOppg4("Faktorer: " + arr.toString());
+            } else {
+                displayOppg4("Vennligst skriv inn et tall.")
+            }
+        }
+
+        //Oppg 5, "Lag et program som fyller en array med innhold (hva du vil) og som skriver ut det siste elementet i en meldingsboks.
+        document.getElementById("oppg5_trigger").onclick = ()=>{
+            let inputNum = parseInt(document.getElementById("o4_in1").value);
+            if (inputNum) {
+                let arr = factorize(inputNum);
+                alert(arr[arr.length - 1]); //Skriv siste element til en alert
+            } else {
+                alert("Vennligst skriv inn et tall");
+            }
+        }
+
+        
+        //XTRA
+
+        // XTRA (frivillig): Oppgave 6 - Om 3 år er Kari 33 år
+        // Lag et program som, basert på alder og navn i to parallelle array, skriver ut følgende
+        // informasjon i en for hver person i array-ene: "Om 3 år er Kari 33 år gammel". Brukeren skal
+        // først skrive inn tallet 3 for å angi at det er alderen om tre år som er interessant. 3-tallet
+        // oppgis bare en gang men skal brukes på alle personene. Dersom brukeren oppgir 12
+        // i stedet for 3, skal "Om 12 år er Kari 42 år gammel" osv. vises for alle navnene. Fleksibilitet
+        // er stikkordet her...
+        const o6_name = ["Jens", "Ole", "Kari", "Berit"];
+        const o6_age = [12, 48, 30, 18];
+        let o6_in = document.getElementById("o6_in")
+        o6_in.oninput = ()=>{
+            let targetAge = parseInt(o6_in.value);
+        }
+
+
+
     </script>
 </body>
 </html>
