@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Øving 5</title>
+    <style>
+        table {
+            border: 2px solid black;
+        }
+        td {
+            padding: 3px;
+            margin: 0;
+            border: 1px solid gray;
+            font-size: large;
+            text-align: center;
+            width: 6vw;
+            height: 6vw;
+        }
+
+        td:first-child, tr:first-child {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Js-ov5</h1>
+
+    <h2>Oppgave 1</h2>
+    <div id="oppg1_out"></div>
+
+    <h2>Oppgave 2</h2>
+    <div id="oppg2_in" style="display: flex; flex-direction: column; width: 50vw;">
+        <label>Varenavn: <input type="text" id="oppg2_in1"></label>
+        <label>Varenavn: <input type="text" id="oppg2_in2"></label>
+        <label>Varenavn: <input type="text" id="oppg2_in3"></label>
+        <label>Varenavn: <input type="text" id="oppg2_in4"></label>
+        <label>Varenavn: <input type="text" id="oppg2_in5"></label>
+        <button id="oppg2_trigger">Last varenavn</button>
+    </div>
+    <div id="oppg2_out"></div>
+
+    <h2>Oppgave 3</h2>
+    <div id="oppg3_in" style="display: flex; flex-direction: column; width: 50vw;"></div>
+    <button id="oppg3_trigger">Last priser</button>
+    <div id="oppg3_out"></div>
+
+    <h2>Oppgave 4</h2>
+    <div id="oppg4_in">
+        <label>Søketekst: <input type="text" id="o4_in1">
+    </div></label>
+    <div id="oppg4_out"></div><br>
+
+    <h2>Oppgave 5</h2>
+    <h4>Divisjonstabell, Kolonne-Nr. / Rad-Nr.</h4>
+    <div id="oppg5_out"></div>
+
+
+    <script>
+
+        // Oppgave 1 - Enkel array: Hardkoding
+        // Lag en array som du fyller med tallene 3, 8, 7, 3, 6 og 2. Tallene skal legges inn direkte i
+        // koden. Altså skal tallene hardkodes, som betyr at du ikke trenger å bruke tekstfelt eller
+        // inputbokser for å få tallene inn i tabellen.
+        let o1_arr = [3, 8, 7, 3, 6, 2];
+        document.getElementById("oppg1_out").innerHTML = o1_arr;
+
+
+        // Oppgave 2 - Varetabell: Løkke og tekstfelt
+        // Lag et program som leser inn 5 varer og legger disse inn i en array. Legg selve
+        // innlesningen inne i en løkke og bruk gjerne tekstfelter. 
+        const ITEMCOUNT = 5;
+        let itemNames = [];
+        function setItemNames() {
+            //Les alle inputs(generer ID-er) og legg i liste
+            for (let i = 0; i < ITEMCOUNT; i++) {
+                const itemName = document.getElementById("oppg2_in" + (i + 1)).value;
+                if (itemName && itemName != "" && !itemNames.includes(itemName)) { //Ikke legg inn hvis det ikke er skrevet inn tekst, eller flere varer har samme navn
+                    itemNames.push(itemName);
+                }
+            }
+            if (itemNames.length == ITEMCOUNT) {
+                document.getElementById("oppg2_out").innerHTML = "Varer: " + itemNames.toString();
+                prepareOppg3(itemNames);
+            } else {
+                document.getElementById("oppg2_out").innerHTML = "Vennligst fyll ut alle feltene med unike tall."
+            }
+
+        }
+        document.getElementById("oppg2_trigger").onclick = setItemNames;
+
+
+        // Oppgave 3 - Pristabell: Finn høyeste og laveste pris
+        // Les inn prisen til hver enkelt av de 5 varene inn i en ny array. Regn deretter ut
+        // gjennomsnittsprisen og summen av alle varene ved hjelp av en løkke. Finn også høyeste og
+        // laveste pris.
+        const o3_in = document.getElementById("oppg3_in")
+        function prepareOppg3(items) {
+            o3_in.innerHTML = "";
+            items.forEach((item, i) => {
+                o3_in.innerHTML += `<label>Pris for ${item}:<input type="text" id="o3_input${i + 1}"></label>`;
+            });
+        }
+        const o3_out = document.getElementById("oppg3_out");
+
+        function setPrices() {
+            let itemPrices = {}; //Object, not array
+            for (let i = 0; i < itemNames.length; i++) {
+                const price = parseInt(document.getElementById("o3_input" + (i + 1)).value);
+                if (!price) {
+                    o3_out.innerHTML = "Vennligst fyll ut alle feltene med tall."
+                    return undefined;
+                }
+                itemPrices[itemNames[i]] = price;
+            }
+            return itemPrices;
+        }
+        function calculateValues(prices) {
+            let max = 0;                        //Teller opp med maksverdien
+            let min = Number.MAX_SAFE_INTEGER;  //Teller ned med minverdien
+            let sum = 0;                        //Summen av alle tall, for å regne gjennomsnitt
+            prices.forEach(price => {
+                max = Math.max(max, price);     //Bruk innebygde funksjoner for å unngå "if"
+                min = Math.min(min, price);
+                sum += price;
+            });
+
+            let average = sum / prices.length;
+
+            return [min, max, average];
+        }
+        let items; //Global array av alle varer, {"navn": pris}
+        document.getElementById("oppg3_trigger").onclick = () => {
+            items = setPrices();
+            if (items) {
+                const [minPrice, maxPrice, avgPrice] = calculateValues(Object.values(items));
+                document.getElementById("oppg3_out").innerHTML =
+                    `Laveste pris: ${minPrice}<br>Høyeste pris: ${maxPrice}<br>Snittpris: ${avgPrice}`;
+            }
+
+        }
+
+
+        // Oppgave 4 - Søk etter vare og tilhørende pris
+        // Lag et program som tar utgangspunkt i et varenavn som brukeren skriver inn i et tekstfelt.
+        // Programmet skal lete opp varen (bruk varetabellen fra oppgave 2), og skrive ut prisen
+        // (pristabellen fra oppgave 3), men bare hvis varen er registrert.
+        // Dersom for eksempel varenavnet ”Coca Cola” skrives inn i tekstfeltet og søke-knappen
+        // trykkes, skal utskriften se slik ut: "Varen med navn Coca Cola koster 15 kroner". Dette
+        // forutsetter at Coca Cola eksisterer og er registrert til å koste 15 kroner. Hvis ikke varen
+        // eksisterer, skal det gis følgende beskjed: ”Varen med navn Coca Cola og tilhørende pris ble
+        // ikke funnet i tabellene”.
+        const o4_in1 = document.getElementById("o4_in1");
+        const o4_out = document.getElementById("oppg4_out");
+        o4_in1.oninput = () => {
+            const query = o4_in1.value;
+            let result = "";
+            //Dette er IKKE en skikkelig søkefunksjon, og krever en eksakt match, med unntak av store og små bokstaver.
+            for (let i = 0; i < itemNames.length; i++) {
+                const name = itemNames[i];
+                if (name.toLowerCase() == query.toLowerCase()) {
+                    result = name;
+                    break;
+                }
+            }
+
+            if (result == "") {
+                o4_out.innerHTML = `Varen med navn ${query} og tilhørende pris ble ikke funnet i tabellene.`;
+            } else {
+                o4_out.innerHTML = `Varen med navn ${result} koster ${items[result]} kroner`
+            }
+        }
+
+
+        // Oppgave 5 - Todimensjonale arrays: Divisjonstabellen
+        // Lag et program som fyller DIVISJONStabellen med innhold og skriver denne ut. Du skal
+        // bruke arrays. Dvs. at du kan lese fra rad 1 og kolonne 3 at 1/3 er 0.3333. Du kan tilsvarende
+        // lese fra krysningspunktet mellom rad 3 og kolonne 1 at 3/1 er 3.
+        // MERK: Du skal ha to funksjoner i løsningen din:
+        // 1. Den første skal legge inn selve divisjonstabellen i en array
+        // 2. Den andre skal hente ut hele tabellens innhold, og vise denne fram (fint presente
+        function generateDivisionTable(size) {
+            if ((size < 1) || (size > Number.MAX_SAFE_INTEGER)) {
+                console.log("Kan ikke generere tabell med gitt størrelse.");
+                return [];
+            }
+            let table = [];
+            for (let i = 0; i < size; i++) {
+                table[i] = [];
+                for (let j = 0; j < size; j++) {
+                    table[i][j] = j / i;
+                }
+            }
+            return table;
+        }
+        function prettyPrintTable(array2d) {
+            //Forbedret tabell-generator, tar en 2d-array inn og lager HTML-tabell
+            let out = "<table>";
+            for (let i = 0; i < array2d.length; i++) {
+                out += "<tr>";
+                for (let j = 0; j < array2d[i].length; j++) {
+                    if (i == 0 && j == 0) { // Deletegn i hjørnet (0, 0)
+                        out += "<td>/</td>";
+                    } else if (i == 0) {    // Index-viser øverst, (x, 0)
+                        out += "<td>"+j+"</td>";
+                    } else if (j == 0) {    // Index-viser til venstre, (0, y)
+                        out += "<td>"+i+"</td>";
+                    } else { // Alle andre celler, les av tabellen
+                        out += "<td>" + array2d[i][j].toFixed(3) + "</td>"; 
+                    }
+                }
+                out += "</tr>";
+            }
+            out += "</table>";
+            return out;
+        }
+
+        const o5_out = document.getElementById("oppg5_out");
+        const TABLESIZE = 10;
+        const tableArray = generateDivisionTable(TABLESIZE);
+        const tableHTML = prettyPrintTable(tableArray)
+        o5_out.innerHTML = tableHTML;
+
+
+
+    </script>
+
+</body>
+
+</html>
