@@ -208,7 +208,7 @@
                         out += "<td>"+j+"</td>";
                     } else if (j == 0) {    // Index-viser til venstre, (0, y)
                         out += "<td>"+i+"</td>";
-                    } else { // Alle andre celler, les av tabellen
+                    } else {                // Alle andre celler, les av tabellen
                         out += "<td>" + array2d[i][j].toFixed(3) + "</td>"; 
                     }
                 }
@@ -224,7 +224,7 @@
         const tableHTML = prettyPrintTable(tableArray)
         o5_out.innerHTML = tableHTML;
 
-
+        
 
     </script>
 

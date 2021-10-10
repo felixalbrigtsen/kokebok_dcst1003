@@ -114,17 +114,14 @@
             }
             return factors;
         }
-        function displayOppg4(data) {
-            document.getElementById("oppg4_out").innerHTML = data;
-        }
         document.getElementById("oppg4_trigger").onclick = ()=>{
             const inputNum = parseInt(document.getElementById("o4_in1").value);
             if (inputNum) {
                 //Kall de to funksjonene beskrevet over
                 const arr = factorize(inputNum);
-                displayOppg4("Faktorer: " + arr.toString());
+                document.getElementById("oppg4_out").innerHTML = ("Faktorer: " + arr.toString());
             } else {
-                displayOppg4("Vennligst skriv inn et tall.")
+                document.getElementById("oppg4_out").innerHTML = ("Vennligst skriv inn et tall.")
             }
         }
 
