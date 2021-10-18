@@ -1,0 +1,71 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <h1>Find the hidden button and click it!</h1>
+  <p><b>How many buttons can you click in 15 seconds?</b></p>
+  <div>Points:</div>
+  <div id="pointsText"></div>
+  <button id="button">Click me</button>
+  <script>
+    let points = 0;
+    let pointsText = document.getElementById('pointsText');
+    pointsText.innerText = points;
+    
+    let button = document.getElementById('button');
+    button.style.position = 'absolute';
+    moveButton();
+
+    // Show button when the mouse cursor is close to it
+    window.onmousemove = (event) => {
+      // Find the center of button
+      let rect = button.getBoundingClientRect();
+      let centerX = (rect.right + rect.left) / 2;
+      let centerY = (rect.bottom + rect.top) / 2;
+      
+      // Calculate distance between mouse cursor and center of button
+      let distance = Math.sqrt(
+      Math.pow(centerX - event.clientX, 2) + Math.pow(centerY - event.clientY, 2)
+      );
+      
+      if (distance < 100 && button.style.visibility == 'hidden') {
+        button.style.visibility = 'visible';
+      }
+    };
+
+    function moveButton() {
+      button.style.visibility = 'hidden';
+      // Move button to a random position
+      button.style.left = Math.floor(Math.random() * 500) + 'px';
+      button.style.top = Math.floor(Math.random() * 500) + 'px';
+    }
+
+    button.onclick = ()=>{
+      points++;
+      pointsText.innerText = points;
+      moveButton();
+    }
+
+    while (true) {
+      setTimeout(()=>{
+        alert(`Du fikk ${points} poeng. Trykk OK for å starte på nytt.`);
+        points = 0;
+        
+      }, 15*1000);
+      
+    }
+    
+	/*
+	Legg til følgende funksjonalitet:
+
+    Når en spiller klikker på knappen skal spilleren få et poeng og knappen skal skjules og flyttes til en tilfeldig plass i vinduet.
+    Etter 15 sekunder, bruk for eksempel alert() til å fortelle poengsummen. Poengsummen skal deretter nullstilles, og spillet skal starte på nytt.
+    Frivillig:
+        Vis også nedtelling i sekunder slik at spilleren ser hvor mange sekunder som er igjen.
+
+	*/
+    
+  </script>
+</body>
+</html>
