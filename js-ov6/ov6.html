@@ -7,6 +7,8 @@
   <p><b>How many buttons can you click in 15 seconds?</b></p>
   <div>Points:</div>
   <div id="pointsText"></div>
+  <div>Time remaining:</div>
+  <div id="timeText"></div>
   <button id="button">Click me</button>
   <script>
     let points = 0;
@@ -47,14 +49,43 @@
       moveButton();
     }
 
-    while (true) {
-      setTimeout(()=>{
-        alert(`Du fikk ${points} poeng. Trykk OK for å starte på nytt.`);
-        points = 0;
-        
-      }, 15*1000);
-      
+    let countdown; //Interval object
+    let remainingTime = 15; //Second counter
+    const timeDisplay = document.getElementById("timeText");
+
+    function restartRound() {
+      //Stop countdown
+      clearInterval(countdown);
+      let remainingTime = 15;
+      timeDisplay.innerHTML = remainingTime;
+    
+      //Display alert (Blocking, will not continue before user interaction)
+      alert(`Du fikk ${points} poeng. Trykk OK for å starte på nytt.`);
+      //Reset score, display to user, hide button
+      points = 0;
+      pointsText.innerText = points;
+      moveButton();
+
+      //Restart countdown timer
+      countdown = setInterval(()=>{
+        remainingTime--;
+        timeDisplay.innerHTML = remainingTime;
+      }, 1000);
+
+      //Wait 15 seconds, restart game
+      setTimeout(restartRound, 15*1000);
     }
+
+
+    //Initial setup:
+    timeDisplay.innerHTML = remainingTime; //Show countdown
+    countdown = setInterval(()=>{ // Decrement and display countdown every second
+      remainingTime--;
+      timeDisplay.innerHTML = remainingTime;
+    }, 1000);
+    setTimeout(restartRound, 15*1000); //Wait 15 seconds, restart game
+
+
     
 	/*
 	Legg til følgende funksjonalitet:
