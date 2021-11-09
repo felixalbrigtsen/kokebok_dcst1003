@@ -1,3 +1,4 @@
 .DS_Store
-js-ov1.zip
-js-ov2.zip
+*/*.zip
+*/node_modules/
+js-ov8/LICENSE
