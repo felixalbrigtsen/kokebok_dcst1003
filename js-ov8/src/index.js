@@ -50,5 +50,6 @@ document.getElementById('submitButton').onclick = () => {
 };
 
 function displayError(txt) {
-  document.getElementById('errorOut').innerHTML = txt;
+  console.log('Error:');
+  console.error(txt);
 }
