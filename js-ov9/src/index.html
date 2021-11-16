@@ -2,10 +2,41 @@
   <head>
     <meta charset="UTF-8" />
     <title>Desktop application</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        font-size: 14px;
+      }
+      th, td {
+        text-align: center;
+        justify-content: center;
+        padding-right: 10px;
+      }
+    </style>
   </head>
   <body>
     Students:
-    <ul id="studentList"></ul>
+    <!-- <ul id="studentList"></ul> -->
+    <table id="studentList">
+      <thead>
+        <tr>
+          <th>Navn</th>
+          <th>Epost</th>
+          <th>Handlinger</th>
+        </tr>
+        </thead> 
+        <tbody id="studentListBody">
+
+        </tbody>
+    </table>
+    <form>
+      <label>Navn: <input id="nameInput" /> </label>
+      <br />
+      <label>Epost: <input id="emailInput" /> </label>
+      <br />
+      <button id="submitButton">Legg til</button>
+    </form>
+
     <script>
       require('@babel/register');
       require('./index.js');
