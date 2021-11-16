@@ -4,7 +4,7 @@ import mysql from 'mysql';
 export let pool = mysql.createPool({
   host: 'mysql-ait.stud.idi.ntnu.no',
   user: 'felixalb', // Replace "username" with your username
-  password: 'geNlUPxY', // Replace "password" with your password
+  password: 'REDACTED', // Replace "password" with your password
   database: 'felixalb', // Replace "username" with your username
   connectionLimit: 1, // Reduce load on NTNU MySQL server
 });
