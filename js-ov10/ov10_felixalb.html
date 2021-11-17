@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Øving 10</title>
+</head>
+
+<body>
+    <h1>Øving 10, Functional algorithms</h1>
+    <h2>Alle oppgaver er utført uten tradisjonelle løkker, men med funksjonelle array-operasjoner som map.</h2>
+    <h2>Åpne konsollen for å se at alle verdier er av rett datatype. </h2>
+
+    <h2>Oppgave 1</h2>
+    
+    <div id="output1"></div>
+    <br>
+    <h2>Oppgave 2</h2>
+    <div id="output2"></div>
+    <script>
+        const output1 = document.getElementById("output1");
+        console.info("Oppgave 1");
+        // add 2 to each element of v: [ 3, 4, 5 ]
+        // multiply each element of v by 2: [ 2, 4, 6 ]
+        // sum of v: 6
+        // mean of v: 2
+        // each element of v as string: [ '1', '2', '3' ]
+        // v as string: v[0] = 1, v[1] = 2, v[2] = 3
+
+        let v = [1, 2, 3];
+        let vplustwo = v.map(x => x + 2);
+        let vdouble = v.map(x => x * 2);
+        let vsum = v.reduce((a, b) => a + b);
+        let vmean = vsum / v.length; // Can be expanded to v.reduce((a, b) => a + b) / v.length
+        let vstringlist = v.map(x => x.toString());
+        let vstring = v.join('');
+
+        // Print to console for debugging, see datatypes
+        // Could also have used JSON.stringify before printing in the DOM
+        console.log(vplustwo);
+        console.log(vdouble);
+        console.log(vsum);
+        console.log(vmean);
+        console.log(vstringlist);
+        console.log(vstring);
+
+        // Display each element as a separate line in the dom
+        output1.innerHTML += "add 2 to each element of v: " + vplustwo + "<br>";
+        output1.innerHTML += "multiply each element of v by 2: " + vdouble + "<br>";
+        output1.innerHTML += "sum of v: " + vsum + "<br>";
+        output1.innerHTML += "mean of v: " + vmean + "<br>";
+        output1.innerHTML += "each element of v as string: " + vstringlist + "<br>";
+        output1.innerHTML += "v as string: " + vstring + "<br>";
+
+
+
+        //Oppgave 2
+        console.info("Oppgave 2");
+
+        const output2 = document.getElementById("output2");
+
+        let students = [
+            { name: 'Ola', grade: 'A' },
+            { name: 'Kari', grade: 'C' },
+            { name: 'Knut', grade: 'C' },
+        ];
+
+        // students-elements as strings: [ 'Ola got A', 'Kari got C', 'Knut got C' ]
+        // Kari got: C
+        // Did everyone get C: No
+        // How many got C: 2
+        // Percentage of C grades: 66.66666666666667
+        // Did anyone get A: Yes
+        // Did anyone get F: No
+
+        let studentsstring = students.map(x => x.name + " got " + x.grade);
+        let everyoneC = students.every(x => x.grade === 'C');
+        let howmanyC = students.filter(x => x.grade === 'C').length;
+        let percentageC = (howmanyC / students.length) * 100;
+        let anyoneA = students.some(x => x.grade === 'A');
+        let anyoneF = students.some(x => x.grade === 'F');
+
+        console.log("students-element as strings: " + JSON.stringify(studentsstring));
+        console.log("Kari got: " + students[1].grade);
+        console.log("Did everyone get C: " + everyoneC);
+        console.log("How many got C: " + howmanyC);
+        console.log("Percentage of C grades: " + percentageC);
+        console.log("Did anyone get A: " + anyoneA);
+        console.log("Did anyone get F: " + anyoneF);
+
+        output2.innerHTML += "students-elements as strings: " + JSON.stringify(studentsstring) + "<br>";
+        output2.innerHTML += "Kari got: " + students[1].grade + "<br>";
+        output2.innerHTML += "Did everyone get C: " + everyoneC + "<br>";
+        output2.innerHTML += "How many got C: " + howmanyC + "<br>";
+        output2.innerHTML += "Percentage of C grades: " + percentageC + "<br>";
+        output2.innerHTML += "Did anyone get A: " + anyoneA + "<br>";
+        output2.innerHTML += "Did anyone get F: " + anyoneF + "<br>";
+        
+    </script>
+</body>
+
+</html>
