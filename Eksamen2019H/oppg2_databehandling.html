@@ -1,0 +1,94 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Oppgave 2</title>
+    </head>
+    <body>
+        <h2>Denne oppgaven baserer seg på at grensesnittet allerede eksisterer, og det er kun noen av handlevognfunksjonene som er implementert.</h2>
+        <p id="out"></p>
+        <script>
+            //Oppgave a (Unngår variabelnavnene "antall" og "pris" da de allerde er i bruk i global-scopet)
+            function linjePris(vareAntall, stykkpris) {
+                if (isNaN(vareAntall) || isNaN(stykkpris)) {
+                    alert("Ugyldig inndata; Pris og antall kan ikke være 0.")
+                    return;
+                }
+
+                //Returner produktet av enhetsprisen og antall enheter.
+                return (vareAntall*stykkpris);
+            }
+
+            //Oppgave b
+            function kurvSum(vareAntall) {
+                //Bruk en for-løkke til å summere opp alle varene
+                let sum = 0;
+                for (let i = 0; i < vareAntall; i++) {
+                    sum += linjePris(antall[i], pris[i]);
+                }
+                return sum
+            }
+
+            //For moro skyld, b kan også løses sånn ( ͡° ͜ʖ ͡°):
+            function kurvSumFunksjonell(vareAntall) {
+                return [...Array(vareAntall).keys()].map(i=>linjePris(antall[i], pris[i])).reduce((a,b)=>a+b, 0);
+            }
+
+            //Oppgave c
+            function skrivUtHandlekurv() {
+                let tekst = "";
+                for (let i = 0; i < neste; i++) {
+                    const stkPris = pris[i].toFixed(2);
+                    const totalpris = linjePris(antall[i], pris[i]).toFixed(2);
+                    tekst += `${antall[i]} ${navn[i]} á ${stkPris} = ${totalpris} <br>`
+                }
+                tekst += "-------------------------------------<br>"
+                tekst += `TOTALT: ${kurvSum(neste).toFixed(2)}`
+                return tekst
+            }
+
+
+
+            //TESTVERDIER, ikke viktig for besvarelsen:
+            let navn = ["Kaviar", "Cola", "Melk"];
+            let antall = [2, 8, 3];
+            let pris = [19.50, 12.90, 11.00];
+            let neste = 3;
+
+            document.getElementById("out").innerHTML = skrivUtHandlekurv();
+
+        </script>
+
+        <h3>Oppgave d)</h3>
+        <p>For å lagre informasjonen over tid trenger vi et sted å lagre informasjonen og en standard på hvordan den skal formateres.
+            Vi har flere mulige løsninger, og valget avhenger blandt annet av sikkerhet, tilgjengelige ressurser og formål.
+            Om målet er at kunden fortest mulig skal kunne se hva de har i handlekurven, men at opplysningene kan kontrolleres og bekreftes senere,
+            kan vi for eksempel lagre de tre listene navn, pris og neste i et javascript-objekt, og enkelt serialisere det til tekst i JSON-format. 
+            Da kan vi for eksempel lagre det i localstorage i nettleseren. Ved å bruke JSON.stringify() og deretter localStorage.setItem() for å lagre, og 
+            tilsvarende localStorage.getItem() og JSON.parse() for å hente informasjonen tilbake, vil vi ha en enkel men usikker måte å lagre informasjonen.
+            Klienten har alle muligheter til å endre på dataen, putte inn falske verdier, og nettleseren kan slette dataen uten forvarsel. Det går heller ikke an å
+            få tak i informasjonen på andre enheter. Dette kan fortsatt være nyttig, da det lar brukeren lukke vinduet og komme tilbake senere, og beholde handlekurven.
+            Om denne løsningen brukes krever det at tjeneren verifiserer alle data når den lastes inn, for å sørge for at dataen ikke er endret. Ved å bare lagre kundedata
+            på deres egne maskiner og aldri sende hele handlekurven, kan det også bli enklere å følge alle krav om personvern og databehandling, for eksempel GDPR.
+
+            <br><br>
+            Om vi derimot ønsker større sikkerhet, mulighet for å bruke samme handlekurv på tvers av enheter, eller å kunne bruke dataen til reklame, trenger
+            vi en server-løsning. Det kan for eksempel gjøres ved at brukeren er logget inn med brukernavn og passord, eventuelt med en tredjepartskonto, 
+            og enhver endring i handlekurven er et "event" som sendes til tjeneren. Der kan tjeneren bekrefte gyldigheten og for eksempel lagre det i en SQL-database.
+            En tjener kan settes opp med et API med endepunkter for både lagring og opphenting av data, og mange av oppgavene som summering og tabellgenerering kan gjøres der. 
+            Da vil du som administrator ha større kontroll over hva kundene gjør, og bruke denne informasjonen både til optimalisering av tjenesten og målrettet reklame.
+            Dette krever betydelig mer arbeid enn den tidligere nevnte løsningen, men åpner samtidig for mange muligheter.
+            <br>
+            Hvis vi holder oss til javascript, kan dette implementeres rent praktisk i Node.JS, der vi kan starte en tjener som lytter på en port og tar imot forespørsler.
+            Forespørslene kan leses og prosesseres, og hvis de er gyldige kan de for eksempel lagres i en SQLite-fil i et tilfelle med lite trafikk, eller vi kan lage en mer 
+            robust løsning med bruk av PostgreSQL, MySQL eller lignende databasestandarder, eller bruke moderne skyløsninger som FireBase eller Amazon Web Services. Mellom disse løsningene
+            er det generelt pris og størrelses-behov som er avgjørende faktorer.
+            <br><br>
+        
+
+            En mellomløsning er også mulig, ved at en noe enklere tjener-applikasjon kun tar imot og sender tilbake serialisert data.
+            Tjeneren kan dumpe de overnevnte listene til JSON, og det hele kan lagres i en database som en tekstblokk. Når tjeneren ber om informasjonen tilbake,
+            får den tilsendt den samme JSON-dataen og gjør dekodingen og prosesseringen selv. Detaljer som faktiske priser kan verifiseres på serveren i det varen faktisk kjøpes.
+        
+        </p>
+    </body>
+</html>

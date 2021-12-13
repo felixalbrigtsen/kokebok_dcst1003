@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Oppgave 1</title>
+</head>
+<body>
+    <label>Bilmerke: <select id="inp_bilmerke">
+        <option value="BMW">BMW</option>
+        <option value="Audi">Audi</option>
+        <option value="Porsche">Porsche</option>
+        <option value="Toyota">Toyota</option>
+    </select></label>
+    <label>Antall dager: <input type="number" id="inp_dager" min="1" max="30" value="1"></label>
+    <label>Alder: <input type="number" id="inp_alder" min="18" max="200" value="25"></label>
+    <button id="btn_bestill">Bestill</button>
+    <div id="out"></div>
+
+    <script>
+        const priser = {
+            "Toyota": 400,
+            "BMW": 600,
+            "Audi": 500,
+            "Porsche": 750
+        }
+        document.getElementById("btn_bestill").onclick = ()=>{
+            const dager = parseInt(document.getElementById("inp_dager").value);
+            const alder = parseInt(document.getElementById("inp_alder").value);
+            const merke = document.getElementById("inp_bilmerke").value;
+            const outputElement = document.getElementById("out");
+            let pris = 0;
+
+            if (isNaN(dager) || isNaN(alder)) {
+                alert("Ugyldig inndata; Antall dager og førers alder må være tallverdier.");
+                return;
+            }
+
+            if (!priser[merke]) {
+                // Dette *skal* aldri skje, men sjekk i tilfelle
+                alert("Ugyldig inndata; Bilmerket er ikke gjenkjent.");
+                return;
+            }
+
+            //Tøm feltet i tilfelle knappen trykkes flere ganger
+            outputElement.innerHTML = "";
+
+            outputElement.innerHTML += `<p>Valgt bilmerke: ${merke}</p>`
+            outputElement.innerHTML += `<p>Pris per døgn: ${priser[merke]}</p>`
+            outputElement.innerHTML += `<p>Antall døgn: ${dager}</p>`
+
+            pris = priser[merke] * dager;
+            
+            if (alder > 25 && merke != "Porsche") {
+                outputElement.innerHTML += `<p>Delsum: ${pris}</p>`
+                pris *= 0.9;
+                outputElement.innerHTML += "<h4>Du kvalifiserer til en rabatt på 10%. </h4>"
+            }
+
+            outputElement.innerHTML += `<h2>Totalpris: ${pris} kr.</h2>`
+        }
+    </script>
+</body>
+</html>
