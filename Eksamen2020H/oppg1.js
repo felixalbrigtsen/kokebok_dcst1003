@@ -17,7 +17,7 @@ document.getElementById("btn_order").onclick = (e)=> {
     //Valider tids-inputs
     const time_from = new Date(rent_time_from);
     const time_to = new Date(rent_time_to);
-    let currentTime = new Date();
+    const currentTime = new Date();
     //Disse gir også automatisk feil om det ikke er valgt noe i det hele tatt
     if (time_from < currentTime) {
         alert("Utleietidspunktet må være etter nåværende tid");
@@ -73,8 +73,8 @@ document.getElementById("btn_order").onclick = (e)=> {
 };
 
 //Initialiser datoer til "om en time" og "Om en time og et døgn"
-let currentTime = new Date();
-let startTime = new Date(currentTime.getTime() + (1000 * 60 * 60 * 2));
-let endTime = new Date(startTime.getTime() + (1000 * 60 * 60 * 24));
+const currentTime = new Date();
+const startTime = new Date(currentTime.getTime() + (1000 * 60 * 60 * 2));
+const endTime = new Date(startTime.getTime() + (1000 * 60 * 60 * 24));
 document.getElementById("rent_time_from").value = startTime.toISOString().substr(0,16);
 document.getElementById("rent_time_to").value = endTime.toISOString().substr(0,16);
