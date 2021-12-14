@@ -32,7 +32,6 @@
             function kurvSumFunksjonell(vareAntall) {
                 return [...Array(vareAntall).keys()].map(i=>linjePris(antall[i], pris[i])).reduce((a,b)=>a+b, 0);
             }
-
             //Oppgave c
             function skrivUtHandlekurv() {
                 let tekst = "";
@@ -42,7 +41,7 @@
                     tekst += `${antall[i]} ${navn[i]} á ${stkPris} = ${totalpris} <br>`
                 }
                 tekst += "-------------------------------------<br>"
-                tekst += `TOTALT: ${kurvSum(neste).toFixed(2)}`
+                tekst += `TOTALT: ${kurvSumFunksjonell(neste).toFixed(2)}`
                 return tekst
             }
 

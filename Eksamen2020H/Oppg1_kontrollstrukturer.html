@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Oppgave 1</title>
+    <link rel="stylesheet" href="oppg1.css">
+</head>
+<body>
+    <form id="boatForm">
+        <fieldset name="boat1">
+            <legend>Båt 1</legend>
+            <select id="boat1_type">
+                <option selected value="Kano">Kano</option>
+                <option value="Kajakk">Kajakk</option>
+                <option value="Supboard">Supboard</option>
+            </select>
+        </fieldset>
+        <fieldset name="boat2">
+            <legend>Båt 2</legend>
+            <select id="boat2_type">
+                <option selected value="Ingen">Ingen</option>
+                <option value="Kano">Kano</option>
+                <option value="Kajakk">Kajakk</option>
+                <option value="Supboard">Supboard</option>
+            </select>
+        </fieldset>
+        <fieldset name="rent_time">
+            <legend>Tidspunkt</legend>
+            <label>Fra: <input type="datetime-local" id="rent_time_from" name="rent_time_from"></label>
+            <br>
+            <label>Til: <input type="datetime-local" id="rent_time_to" name="rent_time_to"></label>
+        </fieldset>
+        <fieldset name="rent_location">
+            <legend>Lokasjon</legend>
+            <label>Henting: <select id="rent_loc_from">
+                <option value="Øya">Øya</option>
+                <option value="Ila">Ila</option>
+                <option value="Korsvika">Korsvika</option>
+                <option value="Munkholmen">Munkholmen</option>
+            </select></label>
+            <br>
+            <label>Levering: <select id="rent_loc_to">
+                <option value="Øya">Øya</option>
+                <option value="Ila">Ila</option>
+                <option value="Korsvika">Korsvika</option>
+                <option value="Munkholmen">Munkholmen</option>
+            </select></label>
+        </fieldset>
+        <fieldset name="rent_details">
+            <legend>Annet</legend>
+            <textarea id="rent_comment" name="rent_details" placeholder="Eventuelle kommentarer..."></textarea>
+        </fieldset>
+        <input id="btn_order" type="submit" value="Bestill">
+    </form>
+    <div id="rent_result"></div>
+
+    <script src="oppg1.js"></script>
+</body>
+</html>
